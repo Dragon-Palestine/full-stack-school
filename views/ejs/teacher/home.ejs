@@ -1,0 +1,79 @@
+<%- include('../include/head.ejs') %>
+
+<body>
+<div class="dashboard">
+
+    <%- include('../include/teacher_side.ejs') %>
+
+    <main class="main">
+        <%- include('../include/home_nav.ejs') %>
+
+        <section class="panel">
+
+            <div class="panel-header">
+                <h1 class="panel-title">
+                    <i class="fas fa-book-open"></i>
+                    My Subjects
+                </h1>
+
+                <p class="panel-subtitle">
+                    Manage your assigned subjects
+                </p>
+            </div>
+
+            <div class="subjects-grid">
+
+                <% subjects.forEach(subject => { %>
+                    <div class="subject-card">
+
+                        <div class="subject-header">
+                            <h2><%= subject.name %></h2>
+                            <span class="subject-code"><%= subject.code %></span>
+                        </div>
+
+                        <div class="subject-body">
+                            <p>
+                                <i class="fas fa-users"></i>
+                                Students: <strong><%= subject.studentsCount %></strong>
+                            </p>
+
+
+                        </div>
+
+                        <div class="subject-actions">
+
+                            <a href="/teacher/subject/student/<%= subject.code %>" class="btn small neon">
+                                <i class="fas fa-calendar-check"></i>
+                                Attendance
+                            </a>
+
+                            <a href="/teacher/subject/student/<%= subject.code %>" class="btn small outline">
+                                <i class="fas fa-star"></i>
+                                Grades
+                            </a>
+
+                            <a href="/teacher/subject/student/<%= subject.code %>" class="btn small ghost">
+                                <i class="fas fa-user-friends"></i>
+                                Students
+                            </a>
+
+                        </div>
+
+                    </div>
+                <% }) %>
+
+                <% if (subjects.length === 0) { %>
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open"></i>
+                        <p>No subjects assigned yet</p>
+                    </div>
+                <% } %>
+
+            </div>
+
+        </section>
+
+    </main>
+</div>
+</body>
+</html>

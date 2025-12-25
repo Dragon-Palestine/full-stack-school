@@ -1,0 +1,56 @@
+<%- include('../include/head.ejs') %>
+
+<body>
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <%- include(`../include/${role}_side.ejs`) %>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Top Nav -->
+    <%- include('../include/home_nav.ejs') %>
+
+    <!-- Page Header -->
+    <div class="dashboard-header">
+      <div class="header-left">
+        <h1 class="header-title">
+          <i class="fas fa-calendar-alt"></i> Attendance By Month
+        </h1>
+        <p class="header-subtitle">Select month and year to view attendance</p>
+      </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="cards-container">
+      <section class="form-panel card">
+        <form action="<%= link %>" method="post" class="neon-form">
+
+          <div class="form-group">
+            <label for="month">Month & Year</label>
+            <input
+              type="month"
+              id="month"
+              name="date"
+              required
+            >
+          </div>
+
+          <input type="hidden" name="subjectCode" value="<%= subjectCode %>">
+          <input type="hidden" name="studentId" value="<%= studentId %>">
+
+          <div class="btn-container">
+            <button type="submit" class="btn">
+              <i class="fas fa-search"></i> View Attendance
+            </button>
+          </div>
+
+        </form>
+      </section>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

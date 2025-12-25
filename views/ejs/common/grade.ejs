@@ -1,0 +1,83 @@
+<%- include('../include/head.ejs') %>
+
+<body>
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <%- include(`../include/${role}_side.ejs`) %>
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Top Nav -->
+        <%- include('../include/home_nav.ejs') %>
+
+        <!-- Page Header -->
+        <div class="dashboard-header">
+            <div class="header-left">
+                <h1 class="header-title">
+                    <i class="fas fa-star"></i> Student Grade
+                </h1>
+                <p class="header-subtitle">
+                    View or update grades for the selected student
+                </p>
+            </div>
+        </div>
+
+        <!-- Cards/Table Container -->
+        <div class="cards-container">
+            <section class="student-panel">
+                <div class="student-table-box">
+                    <form action="/teacher/subject/grade" method="post">
+                        <% if(mod=='read'){ %>
+                            <div class="form-group">
+                                <label>Mid Term</label>
+                                <input type="number" name="mid" value="<%=grade.mid%>" disabled>/30
+                            </div>
+                            <div class="form-group">
+                                <label>Final Exam</label>
+                                <input type="number" name="final" value="<%=grade.final%>" disabled>/40
+                            </div>
+                            <div class="form-group">
+                                <label>Home Work</label>
+                                <input type="number" name="hw" value="<%=grade.hw%>" disabled>/30
+                            </div>
+                        <% } else { %>
+                            <div class="form-group">
+                                <label>Mid Term</label>
+                                <input type="number" name="mid" value="<%=grade.mid%>">/30
+                            </div>
+                            <div class="form-group">
+                                <label>Final Exam</label>
+                                <input type="number" name="final" value="<%=grade.final%>">/40
+                            </div>
+                            <div class="form-group">
+                                <label>Home Work</label>
+                                <input type="number" name="hw" value="<%=grade.hw%>">/30
+                            </div>
+                            <input type="hidden" name="subjectCode" value="<%=subjectCode%>">
+                            <input type="hidden" name="studentId" value="<%=studentId%>">
+                        <% } %>
+
+                        <div class="form-group total">
+                            <% const total = grade.mid + grade.final + grade.hw; %>
+                            <p>Total Grade: <%= total ? total : 0 %></p>
+                        </div>
+
+                        <% if(mod !== 'read'){ %>
+                            <div class="btn-container">
+                                <button type="submit" class="btn">
+                                    <i class="fas fa-save"></i> Submit
+                                </button>
+                            </div>
+                        <% } %>
+
+                    </form>
+                </div>
+            </section>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

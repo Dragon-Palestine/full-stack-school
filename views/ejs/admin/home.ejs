@@ -1,0 +1,69 @@
+<%- include('../include/head.ejs') %>
+
+<body>
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <%- include('../include/admin_side.ejs') %>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Top Navbar -->
+    <%- include('../include/home_nav.ejs') %>
+
+    <!-- Page Header -->
+    <div class="dashboard-header">
+      <div class="header-left">
+        <h1 class="header-title">
+          <i class="fas fa-tachometer-alt"></i> Admin Dashboard
+        </h1>
+        <p class="header-subtitle">Quick access to manage users and subjects</p>
+      </div>
+    </div>
+
+    <!-- Admin Cards -->
+    <div class="cards-container">
+
+      <!-- Manage Admins -->
+      <div class="card gradient">
+        <h2><i class="fas fa-users-cog"></i> Manage Admins</h2>
+        <p>View all admins and edit their permissions.</p>
+        <div class="buttons">
+          <a href="/admin/manage_admin" class="btn">View Admins</a>
+        </div>
+      </div>
+
+      <!-- Teacher Management -->
+      <div class="card gradient">
+        <h2><i class="fas fa-chalkboard-teacher"></i> Teachers</h2>
+        <p>View, add, and edit teacher accounts.</p>
+        <div class="buttons">
+          <a href="/admin/manage_teacher" class="btn">Manage Teachers</a>
+        </div>
+      </div>
+
+      <!-- Student Management -->
+      <div class="card gradient">
+        <h2><i class="fas fa-user-graduate"></i> Students</h2>
+        <p>View, add, and edit student accounts.</p>
+        <div class="buttons">
+          <a href="/admin/manage_student" class="btn">Manage Students</a>
+        </div>
+      </div>
+
+      <!-- Subject Management -->
+      <div class="card gradient">
+        <h2><i class="fas fa-book"></i> Subjects</h2>
+        <p>Manage school subjects and assignments.</p>
+        <div class="buttons">
+          <a href="/admin/manage_subject" class="btn">Manage Subjects</a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

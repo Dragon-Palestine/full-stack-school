@@ -1,0 +1,41 @@
+<aside class="sidebar"> 
+  <div class="brand"> 
+    <i class="fas fa-graduation-cap"></i> 
+    <span>Student System</span> 
+  </div> 
+  <nav class="menu"> 
+    <a href="/admin" class="menu-item"> 
+      <i class="fas fa-tachometer-alt"></i> Dashboard 
+    </a> 
+    <a href="/admin/manage_admin" class="menu-item">
+      <i class="fas fa-user-shield"></i> Manage Admin
+    </a>
+    <a href="/admin/manage_teacher" class="menu-item"> 
+      <i class="fas fa-chalkboard-teacher"></i> Manage Teachers 
+    </a>
+    <a href="/admin/manage_student" class="menu-item"> 
+      <i class="fas fa-user-graduate"></i> Manage Students 
+    </a> 
+     
+    <a href="/admin/manage_subject" class="menu-item"> 
+      <i class="fas fa-book"></i> Courses 
+    </a> 
+
+    <a href="/setting" class="menu-item"> 
+      <i class="fas fa-cogs"></i> Settings 
+    </a> 
+    <a href="/logout" class="menu-item"> 
+      <i class="fas fa-sign-out-alt"></i> Logout 
+    </a> 
+  </nav> 
+</aside>
+<script>
+  const menuItems = document.querySelectorAll('.menu-item');
+  const currentPath = window.location.pathname;
+
+  menuItems.forEach(item => {
+    if(item.getAttribute('href') === currentPath){
+      item.classList.add('active');
+    }
+  });
+</script>

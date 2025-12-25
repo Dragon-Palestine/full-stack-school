@@ -1,0 +1,86 @@
+<%- include('../../include/head.ejs') %>
+<body>
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <%- include('../../include/admin_side.ejs') %>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Navbar -->
+    <%- include('../../include/home_nav.ejs') %>
+
+    <!-- Subject Assignment Panel -->
+    <section class="subject-panel">
+
+      <div class="subject-table-box">
+        <h2><i class="fas fa-book"></i> Assign Subjects to Teacher</h2>
+
+        <% if (!subjects.length) { %>
+          <div class="empty-state">
+            <i class="fas fa-folder-open"></i>
+            <p>No subjects found!</p>
+            <div class="btn-container">
+              <a href="/admin/manage_subject/add" class="btn">Add Subject</a>
+              <a href="/admin/manage_teacher" class="btn outline">Back</a>
+            </div>
+          </div>
+        <% } else { %>
+
+          <form id="assignForm"
+                action="/admin/manage_teacher/select_teacher/<%= teacherId %>/assign"
+                method="post" class="neon-form">
+
+            <% for (let subject of subjects) { %>
+              <% const wasChecked = !!did[subject.name]; %>
+              <div class="check">
+                <input type="checkbox"
+                       class="sub-check"
+                       id="<%= subject.name %>"
+                       value="<%= subject.code %>"
+                       data-old="<%= wasChecked ? 1 : 0 %>"
+                       <%= wasChecked ? 'checked' : '' %>>
+                <label for="<%= subject.name %>"><%= subject.name %></label>
+              </div>
+            <% } %>
+
+            <div class="btn-container">
+              <button type="submit" class="btn">Submit</button>
+            </div>
+          </form>
+
+        <% } %>
+
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- JavaScript to handle checked/unchecked logic -->
+<script>
+document.getElementById('assignForm')?.addEventListener('submit', function () {
+  document.querySelectorAll('.sub-check').forEach(ch => {
+
+    // Unchecked but was previously checked
+    if (ch.dataset.old === "1" && !ch.checked) {
+      const hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = 'nselected';
+      hidden.value = ch.value;
+      this.appendChild(hidden);
+    }
+
+    // Checked (new or old)
+    if (ch.checked) {
+      ch.name = 'selected';
+    }
+
+  });
+});
+</script>
+
+</body>
+</html>

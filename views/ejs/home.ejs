@@ -1,0 +1,50 @@
+<%-include('./include/head.ejs')%>
+<body>
+<div class="dashboard">
+    
+
+    <!-- Sidebar -->
+    <%-include('./include/admin_side.ejs')%>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <%-include('./include/home_nav.ejs')%>
+
+        <div class="cards-container">
+           
+            <!-- Admin Registration Card -->
+            <div class="card gradient">
+                <h2><i class="fas fa-user-shield"></i> Admin Registration</h2>
+                <p>Register a new admin for the student system.</p>
+                <div class="buttons">
+                    <a href="/admin" class="btn"><i class="fas fa-user-plus"></i> Register Admin</a>
+                </div>
+            </div>
+
+            <!-- Add New Visit Card -->
+            <div class="card gradient">
+                <h2><i class="fas fa-notes-medical"></i> Teacher Registration</h2>
+                <p>Register as a teacher.</p>
+                <div class="buttons">
+                    <a href="/teacher" class="btn"><i class="fas fa-chalkboard-teacher"> +</i> Register Teacher</a>
+                </div>
+            </div>
+
+            <!-- Previous Visit Registration Card -->
+            <div class="card gradient">
+                <h2><i class="fas fa-history"></i> Student Registration</h2>
+                <p>Register as a student.</p>
+                <div class="buttons">
+                    <a href="/student" class="btn"><i class="fas fa-user-graduate"> +</i> Register Student</a>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+    <%}%>
+</div>
+
+</body>
+</html>

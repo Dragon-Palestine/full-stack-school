@@ -1,0 +1,52 @@
+
+<%- include('../include/head.ejs') %>
+<body>
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <%- include('../include/teacher_side.ejs') %>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Navbar -->
+        <%- include('../include/home_nav.ejs') %>
+        <!-- student Panel -->
+        <section class="student-panel">
+            <!-- student Table -->
+            <div class="student-table-box">
+                <h2><i class="fas fa-table"></i> student grade</h2>
+                <form action="/teacher/subject/grade" method="post">
+                    <div class="mid">
+                        <label for="mid">Mid Term</label>
+                        <input type="number" name="mid" value="<%=grade.mid%>" id="mid">/30
+
+                    </div>
+                    <div class="final">
+                        <label for="final">final Exame</label>
+                        <input type="number" name="final" value="<%=grade.final%>" id="final">/40
+
+                    </div>
+                    <div class="hw">
+                        <label for="hw">Home Worke</label>
+                        <input type="number" name="hw" value="<%=grade.hw%>" id="hw">/30
+                    </div>
+                    <div class="total">
+                        <%
+                        const total=grade.mid+grade.final+grade.hw;
+                        %>
+                        <p>Total Grade : <%=total?total:0%></p>
+                    </div>
+                    <input type="hidden" name="subjectCode" value="<%=subjectCode%>">
+                    <input type="hidden" name="studentId" value="<%=studentId%>">
+
+                    <button type="submit">Submit</button>
+                </form>
+
+            </div>
+
+        </section>
+    </main>
+</div>
+</body>
+</html>

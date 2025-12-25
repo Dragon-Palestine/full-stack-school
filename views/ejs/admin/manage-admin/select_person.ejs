@@ -1,0 +1,83 @@
+<%- include('../../include/head.ejs') %> 
+
+<link rel="stylesheet" href="/css/manage-permission.css"> 
+
+<body> 
+<div class="dashboard"> 
+
+    <!-- Sidebar --> 
+    <%- include('../../include/admin_side.ejs') %> 
+
+    <!-- Main --> 
+    <main class="main"> 
+
+        <!-- Navbar --> 
+        <%- include('../../include/home_nav.ejs') %> 
+
+        <div class="dashboard-header"> 
+            <h1><i class="fas fa-user-lock"></i> Manage Permissions</h1> 
+            <p>Select a user to edit permissions</p> 
+        </div> 
+
+        <!-- ================= ADMINS ================= --> 
+        <div class="role-section"> 
+            <h2 class="role-title admin">Admins</h2> 
+
+            <% admins.forEach(person => { %> 
+                <div class="user-row"> 
+                    <div class="user-info"> 
+                        <strong><%= person.name %></strong> 
+                        <span><%= person.email %></span> 
+                    </div> 
+
+                    <a href="/admin/manage_permission/<%= person.id %>" class="btn small danger"> 
+                        Manage 
+                    </a> 
+                </div> 
+            <% }) %> 
+        </div> 
+
+        <div class="separator"></div> 
+
+        <!-- ================= TEACHERS ================= --> 
+        <div class="role-section"> 
+            <h2 class="role-title teacher">Teachers</h2> 
+
+            <% teachers.forEach(person => { %> 
+                <div class="user-row"> 
+                    <div class="user-info"> 
+                        <strong><%= person.name %></strong> 
+                        <span><%= person.email %></span> 
+                    </div> 
+
+                    <a href="/admin/manage_permission/<%= person.id %>" class="btn small"> 
+                        Manage 
+                    </a> 
+                </div> 
+            <% }) %> 
+        </div> 
+
+        <div class="separator"></div> 
+
+        <!-- ================= STUDENTS ================= --> 
+        <div class="role-section"> 
+            <h2 class="role-title student">Students</h2> 
+
+            <% students.forEach(person => { %> 
+                <div class="user-row"> 
+                    <div class="user-info"> 
+                        <strong><%= person.name %></strong> 
+                        <span><%= person.email %></span> 
+                    </div> 
+
+                    <a href="/admin/manage_permission/<%= person.id %>" class="btn small outline"> 
+                        Manage 
+                    </a> 
+                </div> 
+            <% }) %> 
+        </div> 
+
+    </main> 
+</div> 
+</body> 
+</html>

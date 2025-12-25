@@ -1,0 +1,73 @@
+<%- include('../include/head.ejs') %>
+
+<body>
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <%- include(`../include/${role}_side.ejs`) %>
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Top Nav -->
+        <%- include('../include/home_nav.ejs') %>
+
+        <!-- Page Header -->
+        <div class="dashboard-header">
+            <div class="header-left">
+                <h1 class="header-title">
+                    <i class="fas fa-table"></i> <%=For%> List
+                </h1>
+                <p class="header-subtitle">
+                    Manage all <%=For%>s in the system
+                </p>
+            </div>
+        </div>
+
+        <!-- Cards/Table Container -->
+        <div class="cards-container">
+            <section class="student-panel">
+                <div class="student-table-box">
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(persons && persons.length > 0) { %>
+                                <% persons.forEach(person => { %>
+                                    <tr>
+                                        <td><%= person.id %></td>
+                                        <td><%= person.name %></td>
+                                        <td><%= person.email %></td>
+                                        <td><%= person.role %></td>
+                                        <td>
+                                            <a href="/admin/manage_<%=For%>/edit/<%= person.id %>" class="btn sm">Edit</a>
+                                            <a href="/admin/manage_<%=For%>/delete/<%= person.id %>" class="btn sm danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="5" style="text-align:center;">No <%=For%>s found</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    <div class="">
+                        <a href="/admin/manage_<%=For%>/add" class="btn">Add <%=For%></a>
+                        <a href="/admin" class="btn outline">Back</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

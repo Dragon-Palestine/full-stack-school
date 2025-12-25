@@ -1,0 +1,53 @@
+<%- include('../../include/head.ejs') %> 
+<body>
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <%- include('../../include/admin_side.ejs') %>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Top Navbar -->
+        <%- include('../../include/home_nav.ejs') %>
+
+        <!-- Page Header -->
+        <div class="dashboard-header">
+            <div class="header-left">
+                <h1 class="header-title">
+                    <i class="fas fa-book"></i> Manage Subjects
+                </h1>
+            </div>
+        </div>
+
+        <!-- Action Cards -->
+        <div class="cards-container">
+
+            <!-- Add Subject Card -->
+            <div class="card gradient">
+                <h2><i class="fas fa-plus-circle"></i> Add Subject</h2>
+                <p>Create a new subject.</p>
+                <div class="btn-container">
+                    <a href="/admin/manage_subject/add" class="btn">
+                        <i class="fas fa-plus"></i> Add Subject
+                    </a>
+                </div>
+            </div>
+
+            <!-- View Subjects Card -->
+            <div class="card gradient">
+                <h2><i class="fas fa-list"></i> View Subjects</h2>
+                <p>Show all registered subjects.</p>
+                <div class="btn-container">
+                    <a href="/admin/manage_subject/list" class="btn">
+                        <i class="fas fa-eye"></i> Show Subjects
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

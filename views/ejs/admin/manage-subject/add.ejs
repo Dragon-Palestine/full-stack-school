@@ -1,0 +1,33 @@
+<!-- views/addAdmin.ejs -->
+<%- include('../../include/head.ejs') %>
+<body>
+<div class="dashboard">
+    <%- include('../../include/admin_side.ejs') %>
+    <main class="main">
+        <%- include('../../include/home_nav.ejs') %>
+
+        <section class="form-panel">
+            <h1><i class="fas fa-user-shield"></i> Add Subject</h1>
+
+            <form action="/admin/manage_subject/add" method="POST" class="neon-form">
+                <!-- Subject Info -->
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Enter name" required />
+                </div>
+                <div class="form-group">
+                    <label for="code">Code</label>
+                    <input type="text" name="code" id="code" placeholder="Enter code" required />
+                </div>
+                <div class="form-group">
+                    <label for="hours">Hours</label>
+                    <input type="number" name="hours" id="hours" value="0"/>
+                </div>
+
+                <button type="submit" class="submit-btn">Add Subject</button>
+            </form>
+        </section>
+    </main>
+</div>
+</body>
+</html>

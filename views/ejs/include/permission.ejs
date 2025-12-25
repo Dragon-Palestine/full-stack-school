@@ -1,0 +1,17 @@
+<!-- include/permissions.ejs -->
+<div class="form-panel">
+    <h2><i class="fas fa-key"></i> Permissions</h2>
+    
+    <div class="neon-form">
+        <% if (permissions && permissions.length > 0) { %>
+            <% permissions.forEach((perm) => { %>
+                <div class="form-group" style="flex-direction:row; align-items:center; gap:1rem;">
+                    <input type="checkbox" id="<%= perm %>" name="permissions" value="<%= perm %>"/>
+                    <label for="<%= perm %>"><%= perm %></label>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No permissions available.</p>
+        <% } %>
+    </div>
+</div>

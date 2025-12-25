@@ -1,0 +1,102 @@
+<%- include('../../include/head.ejs') %> 
+
+<body> 
+<div class="dashboard"> 
+
+  <!-- Sidebar --> 
+  <%- include('../../include/admin_side.ejs') %> 
+
+  <!-- Main --> 
+  <main class="main"> 
+
+    <!-- Top Nav --> 
+    <%- include('../../include/home_nav.ejs') %> 
+
+    <!-- Page Header --> 
+    <div class="dashboard-header"> 
+      <div class="header-left"> 
+        <h1 class="header-title"> 
+          <i class="fas fa-user-lock"></i> Edit Permissions 
+        </h1> 
+      </div> 
+    </div> 
+
+    <!-- Permission Form --> 
+    <section class="panel permission-panel"> 
+      <form action="/admin/update_permission" method="POST" class="permission-form"> 
+
+        <input type="hidden" name="personId" value="<%= person.id %>"> 
+
+        <div class="form-group"> 
+          <label>Name</label> 
+          <input type="text" value="<%= person.name %>" disabled> 
+        </div> 
+
+        <div class="form-group"> 
+          <label>Role</label> 
+          <input type="text" value="<%= person.role %>" disabled> 
+        </div> 
+
+        <div class="form-group permissions-list"> 
+          <label>Permissions</label> 
+          <div class="checkbox-group"> 
+            <label> 
+              <input type="checkbox" name="newPermissions" value="manageAdmin" <%= permission.manageAdmin ? 'checked' : '' %> > 
+              Manage Admin 
+            </label> 
+
+            <label> 
+              <input type="checkbox" name="newPermissions" value="manageTeacher"<%= permission.manageTeacher ? 'checked' : '' %> > 
+              Manage Teacher 
+            </label> 
+
+            <label> 
+              <input type="checkbox" name="newPermissions" value="manageStudent" <%= permission.manageStudent ? 'checked' : '' %> > 
+              Manage Student 
+            </label> 
+
+            <label> 
+              <input type="checkbox" name="newPermissions" value="manageSubject" <%= permission.manageSubject ? 'checked' : '' %> > 
+              Manage Subject 
+            </label> 
+
+            <label> 
+              <input type="checkbox" name="newPermissions" value="manageGrade" <%= permission.manageGrade ? 'checked' : '' %> > 
+              Manage Grade 
+            </label> 
+
+            <label> 
+              <input type="checkbox" name="newPermissions" value="manageAttendance" <%= permission.manageAttendance ? 'checked' : '' %> > 
+              Manage Attendance 
+            </label> 
+
+            <label> 
+              <input type="checkbox" name="newPermissions" value="assignSubjectToTeacher" <%= permission.assignSubjectToTeacher ? 'checked' : '' %> > 
+              Assign Subject to Teacher 
+            </label> 
+
+            <label> 
+              <input type="checkbox" name="newPermissions" value="assignSubjectToStudent" <%= permission.assignSubjectToStudent ? 'checked' : '' %> > 
+              Assign Subject to Student 
+            </label> 
+
+            <label> 
+              <input type="checkbox" name="newPermissions" value="managePermission" <%= permission.managePermission ? 'checked' : '' %> > 
+              manage permission 
+            </label> 
+          </div> 
+        </div> 
+
+        <div class="form-group btn-container"> 
+          <button type="submit" class="btn save-btn"> 
+            <i class="fas fa-save"></i> Save Changes 
+          </button> 
+        </div> 
+
+      </form> 
+    </section> 
+
+  </main> 
+</div> 
+</body> 
+</html>

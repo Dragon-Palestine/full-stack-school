@@ -1,0 +1,58 @@
+<%- include('../../include/head.ejs') %> 
+<body> 
+<div class="dashboard"> 
+
+    <!-- Sidebar --> 
+    <%- include('../../include/admin_side.ejs') %> 
+
+    <!-- Main --> 
+    <main class="main"> 
+
+        <!-- Top Navbar --> 
+        <%- include('../../include/home_nav.ejs') %> 
+
+        <!-- Page Header --> 
+        <div class="dashboard-header"> 
+            <div class="header-left"> 
+                <h1 class="header-title"> 
+                    <i class="fas fa-user-graduate"></i> Manage Students 
+                </h1> 
+            </div> 
+        </div> 
+
+        <!-- Action Cards --> 
+        <div class="cards-container"> 
+
+            <!-- Add Student --> 
+            <div class="card"> 
+                <h2><i class="fas fa-user-plus"></i> Add Student</h2> 
+                <p>Create a new student account.</p> 
+                <div class="btn-container"> 
+                    <a href="/admin/manage_student/add" class="btn">Add Student</a> 
+                </div> 
+            </div> 
+
+            <!-- View Students --> 
+            <div class="card"> 
+                <h2><i class="fas fa-users"></i> View Students</h2> 
+                <p>Show all registered students.</p> 
+                <div class="btn-container"> 
+                    <a href="/admin/manage_student/list" class="btn">Show Students</a> 
+                </div> 
+            </div> 
+
+            <!-- Assign Student To Subject --> 
+            <div class="card"> 
+                <h2><i class="fas fa-book"></i> Register Subjects</h2> 
+                <p>Register student in subjects.</p> 
+                <div class="btn-container"> 
+                    <a href="/admin/manage_student/select_student" class="btn">Assign</a> 
+                </div> 
+            </div> 
+
+        </div> 
+         
+    </main> 
+</div> 
+</body> 
+</html>

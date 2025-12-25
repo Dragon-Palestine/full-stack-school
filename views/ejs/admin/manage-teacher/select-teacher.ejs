@@ -1,0 +1,63 @@
+<%- include('../../include/head.ejs') %>
+<body>
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <%- include('../../include/admin_side.ejs') %>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Navbar -->
+    <%- include('../../include/home_nav.ejs') %>
+
+    <!-- Page Header -->
+    <div class="dashboard-header">
+      <div class="header-left">
+        <h1 class="header-title">
+          <i class="fas fa-chalkboard-teacher"></i> Teachers
+        </h1>
+        <p class="header-subtitle">View and manage all teacher accounts</p>
+      </div>
+    </div>
+
+    <!-- Teacher Table -->
+    <section class="teacher-panel">
+      <div class="teacher-table-box">
+        <h2><i class="fas fa-table"></i> Teacher List</h2>
+
+        <table class="teacher-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(teachers && teachers.length > 0) { %>
+              <% teachers.forEach(teacher => { %>
+                <tr>
+                  <td><%= teacher.id %></td>
+                  <td><%= teacher.name %></td>
+                  <td><%= teacher.email %></td>
+                  <td>
+                    <a href="/admin/manage_teacher/select_teacher/<%= teacher.id %>" class="btn sm">Select</a>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="4" style="text-align:center;">No teachers found</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

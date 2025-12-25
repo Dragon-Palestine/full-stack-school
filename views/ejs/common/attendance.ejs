@@ -1,0 +1,76 @@
+<%- include('../include/head.ejs') %>
+
+<body>
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <%- include(`../include/${role}_side.ejs`) %>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Top Nav -->
+    <%- include('../include/home_nav.ejs') %>
+
+    <!-- Page Header -->
+    <div class="dashboard-header">
+      <div class="header-left">
+        <h1 class="header-title">
+          <i class="fas fa-calendar-check"></i> Attendance - <%= month %>/<%= year %>
+        </h1>
+        <p class="header-subtitle">Mark attendance for each day of the month</p>
+      </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="cards-container">
+      <section class="form-panel card">
+        <form action="<%= link %>" method="POST">
+
+          <% if(mod != 'read'){ %>
+            <input type="hidden" name="year" value="<%= year %>">
+            <input type="hidden" name="month" value="<%= month %>">
+            <input type="hidden" name="subjectCode" value="<%= subjectCode %>">
+            <input type="hidden" name="studentId" value="<%= studentId %>">
+          <% } %>
+
+          <table class="attendance-table">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Present</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let d = 1; d <= daysInMonth; d++) { %>
+                <tr>
+                  <td><%= d %></td>
+                  <td>
+                    <input
+                      style="background-attachment: fixed;"
+                      type="checkbox"
+                      name="days"
+                      value="<%= d %>"
+                      <%= presentDays.includes(d) ? 'checked' : '' %>
+                      <%= mod == 'read' ? 'disabled' : '' %>
+                    >
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+
+          <div class="btn-container">
+            <button type="submit" class="btn save-btn">
+              <% if(mod != 'read'){ %>Save Attendance<% } else { %>Back<% } %>
+            </button>
+          </div>
+
+        </form>
+      </section>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

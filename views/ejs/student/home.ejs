@@ -1,0 +1,53 @@
+<%- include('../include/head.ejs') %>
+
+<body>
+<div class="dashboard">
+
+  <%- include('../include/student_side.ejs') %>
+
+  <main class="main">
+    <%- include('../include/home_nav.ejs') %>
+
+    <section class="panel subjects-panel">
+      <div class="panel-header">
+        <h1><i class="fas fa-book"></i> My Subjects</h1>
+        <p>Select a subject to view grades or attendance</p>
+      </div>
+
+      <div class="subjects-grid">
+        <% if (subjects && subjects.length > 0) { %>
+          <% subjects.forEach(subject => { %>
+            <form action="/student/subject/action" method="POST" class="subject-form">
+              <input type="hidden" name="subjectCode" value="<%= subject.code %>">
+              <div class="subject-card">
+                <div class="subject-header">
+                  <h2><%= subject.name %></h2>
+                  <span class="subject-code"><%= subject.code %></span>
+                </div>
+                <div class="subject-body">
+                  <p><i class="fas fa-users"></i> Students: <strong><%= subject.studentsCount %></strong></p>
+                </div>
+                <div class="subject-actions">
+                  <button type="submit" name="action" value="grade" class="btn small neon">
+                    <i class="fas fa-star"></i> Grade
+                  </button>
+                  <button type="submit" name="action" value="attendance" class="btn small outline">
+                    <i class="fas fa-calendar-check"></i> Attendance
+                  </button>
+                </div>
+              </div>
+            </form>
+          <% }) %>
+        <% } else { %>
+          <div class="empty-state">
+            <i class="fas fa-folder-open"></i>
+            <p>No subjects found</p>
+          </div>
+        <% } %>
+      </div>
+
+    </section>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<%- include('../../include/head.ejs') %>
+<body>
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <%- include('../../include/admin_side.ejs') %>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Navbar -->
+    <%- include('../../include/home_nav.ejs') %>
+
+    <!-- Page Header -->
+    <div class="dashboard-header">
+      <div class="header-left">
+        <h1 class="header-title">
+          <i class="fas fa-chalkboard-teacher"></i> Manage Teachers
+        </h1>
+        <p class="header-subtitle">Add, view, or assign teachers to subjects</p>
+      </div>
+    </div>
+
+    <!-- Actions Cards -->
+    <div class="cards-container">
+
+      <!-- Add Teacher -->
+      <div class="card gradient">
+        <h2><i class="fas fa-user-plus"></i> Add Teacher</h2>
+        <p>Create a new teacher account.</p>
+        <div class="btn-container">
+          <a href="/admin/manage_teacher/add" class="btn">Add Teacher</a>
+        </div>
+      </div>
+
+      <!-- View Teachers -->
+      <div class="card gradient">
+        <h2><i class="fas fa-users"></i> View Teachers</h2>
+        <p>Show all teachers in the system.</p>
+        <div class="btn-container">
+          <a href="/admin/manage_teacher/list" class="btn">Show Teachers</a>
+        </div>
+      </div>
+
+      <!-- Assign Teacher To Subject -->
+      <div class="card gradient">
+        <h2><i class="fas fa-book"></i> Assign to Subject</h2>
+        <p>Register teacher in a subject.</p>
+        <div class="btn-container">
+          <a href="/admin/manage_teacher/select_teacher" class="btn">Assign</a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

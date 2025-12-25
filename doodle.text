@@ -1,0 +1,27 @@
+// Table.Teacher.belongsTo(Table.Person);
+// Table.Person.hasOne(Table.Teacher);
+// Table.Student.belongsTo(Table.Person);
+// Table.Person.hasOne(Table.Student);
+// Table.Admin.belongsTo(Table.Person);
+// Table.Person.hasOne(Table.Admin);
+
+// Table.Login.belongsTo(Table.Person);
+// Table.Person.hasOne(Table.Login);
+
+// Table.Permission.belongsTo(Table.Person);
+// Table.Person.hasOne(Table.Permission);
+
+// Table.Teacher.belongsToMany(Table.Subject,{through:Table.Teacher_subject})
+// Table.Subject.belongsToMany(Table.Teacher,{through:Table.Teacher_subject})
+
+// Table.Student.belongsToMany(Table.Subject,{through:Table.Registartion})
+// Table.Subject.belongsToMany(Table.Student,{through:Table.Registartion})
+
+// Table.Registartion.belongsTo(Table.Grade);
+// Table.Grade.hasOne(Table.Registartion);
+
+// Table.Registartion.belongsTo(Table.Attendance);
+// Table.Attendance.hasOne(Table.Registartion);
+
+// Table.AttendanceDate.belongsTo(Table.Attendance);
+// Table.Attendance.hasMany(Table.AttendanceDate);

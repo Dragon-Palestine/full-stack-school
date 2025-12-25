@@ -1,0 +1,99 @@
+<%- include('../../include/head.ejs') %>
+<body>
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <%- include('../../include/admin_side.ejs') %>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Navbar -->
+        <%- include('../../include/home_nav.ejs') %>
+
+        <!-- subject Panel -->
+        <section class="subject-panel">
+
+            <div class="subject-table-box">
+                <h2><i class="fas fa-table"></i> Subject List</h2>
+
+                <% if (!valible.length) { %>
+                    <p>we did not found any subject !!</p>
+                    <a href="/admin/manage_subject/add">Add</a>
+                    <a href="/admin/manage_student">back</a>
+                <% } else { %>
+
+                <form id="registerForm"
+                      action="/admin/manage_student/select_student/<%= studentId %>/register"
+                      method="post">
+
+                    <% for (let val of valible) { %>
+                        <%
+                            const teacher = val[0];
+                            const teacherName = val[1];
+                            const subjects = val[2];
+                        %>
+
+                        <p><%= teacherName %></p>
+
+                        <% for (let subject of subjects) { %>
+                            <%
+                                const data = [teacher.id, subject.code];
+                                const wasChecked = (did[subject.name] == teacher.id);
+                            %>
+
+                            <div class="check">
+                                <label for="<%= subject.name %>"><%= subject.name %></label>
+
+                                <input type="checkbox"
+                                       class="sub-check"
+                                       id="<%= subject.name %>"
+                                       value="<%= data %>"
+                                       data-old="<%= wasChecked ? 1 : 0 %>"
+                                       <%= wasChecked ? 'checked' : '' %>>
+                            </div>
+                        <% } %>
+
+                    <% } %>
+
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+
+                <% } %>
+
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<!-- ✅ JavaScript -->
+<script>
+document.getElementById('registerForm').addEventListener('submit', function () {
+
+    document.querySelectorAll('.sub-check').forEach(ch => {
+
+        // 🟥 كان مسجّل وانشال
+        if (ch.dataset.old === "1" && !ch.checked) {
+
+            let hidden = document.createElement('input');
+            hidden.type = 'hidden';
+            hidden.name = 'nselected';
+            hidden.value = ch.value;
+
+            this.appendChild(hidden);
+        }
+
+        // 🟩 ضل مسجّل
+        if (ch.checked) {
+            ch.name = 'selected';
+        }
+
+    });
+
+});
+</script>
+
+</body>
+</html>

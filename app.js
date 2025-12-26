@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -219,7 +221,10 @@ sequelize
     // http://localhost:72
     // npm start
     // npm run mine
-    app.listen(3000);
+    const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
   });
 
   /*
@@ -228,5 +233,7 @@ git status
 git add .
 git commit -m "message"
 git push
+git push origin main
+
 
   */

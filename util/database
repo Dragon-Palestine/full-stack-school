@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
@@ -11,5 +13,7 @@ const sequelize = new Sequelize(
     logging: false // لتخفيف اللوجات
   }
 );
+console.log(process.env.DB_USER, process.env.DB_PASSWORD, process.env.DB_HOST);
 
 module.exports = sequelize;
+

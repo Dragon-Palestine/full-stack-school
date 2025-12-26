@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
-
 // make a session foe store user and role and permission
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
@@ -35,7 +34,6 @@ app.use(loginRouter);
 
 const logoutRouter = require("./routes/sidBar/logout");
 app.use(logoutRouter);
-
 
 const settingRouter = require("./routes/sidBar/setting");
 app.use(settingRouter);
@@ -176,7 +174,6 @@ Table.Registartion.belongsTo(Table.Attendance, {
   foreignKey: "attendanceId",
 });
 
-
 Table.Attendance.hasMany(Table.AttendanceDate, {
   foreignKey: "attendanceId",
   onDelete: "CASCADE",
@@ -187,15 +184,15 @@ Table.AttendanceDate.belongsTo(Table.Attendance, {
 
 module.exports = Table;
 
-
 const sequelize = require("./util/database");
 const funcs = require("./util/funcs");
-sequelize.authenticate()
+sequelize
+  .authenticate()
   .then(() => {
-    console.log('Database connected successfully');
+    console.log("Database connected successfully");
   })
-  .catch(err => {
-    console.error('Database connection failed:', err);
+  .catch((err) => {
+    console.error("Database connection failed:", err);
   });
 
 sequelize
@@ -219,5 +216,17 @@ sequelize
     // http://localhost:72
     // npm start
     // npm run mine
-    app.listen(72);
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log("Server running on port " + PORT);
+    });
   });
+
+/*
+
+git status
+git add .
+git commit -m "message"
+git push
+
+  */

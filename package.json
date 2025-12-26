@@ -49,11 +49,12 @@
     "touch": "^3.1.1",
     "undefsafe": "^2.0.5"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "lina": "nodemon app.js"
-  },
+"scripts": {
+  "start": "node app.js",
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "lina": "node app.js"
+},
+
   "author": "loai gh",
   "license": "ISC"
 }

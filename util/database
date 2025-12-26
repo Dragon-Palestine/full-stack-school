@@ -1,22 +1,19 @@
-const dotenv = require('dotenv');
 const { Sequelize } = require("sequelize");
 
-// تحميل متغيرات البيئة حسب البيئة الحالية
-const env = process.env.NODE_ENV || 'development';
-dotenv.config({ path: env === 'production' ? '.env.production' : '.env.local' });
-
+// استخدم متغيرات البيئة مباشرة
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
+  process.env.DB_NAME,       // اسم قاعدة البيانات
+  process.env.DB_USER,       // اسم المستخدم
+  process.env.DB_PASSWORD,   // كلمة المرور
   {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT || 3306,
+    host: process.env.DB_HOST,   // المضيف
+    port: process.env.DB_PORT || 3306, // المنفذ
     dialect: "mysql",
     logging: false
   }
 );
 
+// اختبار الاتصال بالقاعدة
 sequelize.authenticate()
   .then(() => console.log('✅ Database connected successfully!'))
   .catch(err => console.error('❌ Database connection failed:', err));

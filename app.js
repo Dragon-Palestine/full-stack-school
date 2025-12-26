@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
+
 // make a session foe store user and role and permission
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
@@ -34,6 +35,7 @@ app.use(loginRouter);
 
 const logoutRouter = require("./routes/sidBar/logout");
 app.use(logoutRouter);
+
 
 const settingRouter = require("./routes/sidBar/setting");
 app.use(settingRouter);
@@ -174,6 +176,7 @@ Table.Registartion.belongsTo(Table.Attendance, {
   foreignKey: "attendanceId",
 });
 
+
 Table.Attendance.hasMany(Table.AttendanceDate, {
   foreignKey: "attendanceId",
   onDelete: "CASCADE",
@@ -184,38 +187,37 @@ Table.AttendanceDate.belongsTo(Table.Attendance, {
 
 module.exports = Table;
 
+
 const sequelize = require("./util/database");
 const funcs = require("./util/funcs");
-
-const PORT = process.env.PORT || 3000;
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connected successfully');
+  })
+  .catch(err => {
+    console.error('Database connection failed:', err);
+  });
 
 sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Database connected successfully");
-  })
-  .catch((err) => {
-    console.error("Database connection failed:", err);
+  .sync() // {force:true}
+  .then(async (_) => {
+    let FoundTheAwoner = await Table.Login.findByPk("loai");
+    if (!FoundTheAwoner) {
+      person = await Table.Person.create({
+        name: "loai m gh",
+        age: "23",
+        phone: "0599955819",
+        gender: "mail",
+        email: "us@gmail.com",
+        role: "admin",
+      });
+      await person.createLogin({ user: "loai", password: "171" });
+      await person.createAdmin();
+      await person.createPermission(funcs.getPermission(true));
+      await person.save();
+    }
+    // http://localhost:72
+    // npm start
+    // npm run mine
+    app.listen(72);
   });
-
-sequelize.sync().then(async (_) => {
-  let FoundTheAwoner = await Table.Login.findByPk("loai");
-  if (!FoundTheAwoner) {
-    const person = await Table.Person.create({
-      name: "loai m gh",
-      age: "23",
-      phone: "0599955819",
-      gender: "mail",
-      email: "us@gmail.com",
-      role: "admin",
-    });
-    await person.createLogin({ user: "loai", password: "171" });
-    await person.createAdmin();
-    await person.createPermission(funcs.getPermission(true));
-    await person.save();
-  }
-
-  app.listen(PORT, () => {
-    console.log("Server running on port " + PORT);
-  });
-});

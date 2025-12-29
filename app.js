@@ -158,5 +158,6 @@ git status
 git add .
 git commit -m "upgrade"
 git push origin main
+git push
 
   */

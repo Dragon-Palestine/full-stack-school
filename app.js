@@ -156,7 +156,7 @@ sequelize
   /*
 git status
 git add .
-git commit -m "Setup Railway environment variables and update db.js"
+git commit -m "upgrade"
 git push origin main
 
   */

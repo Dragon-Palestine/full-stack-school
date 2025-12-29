@@ -43,9 +43,10 @@ exports.postSettingPage=async(req,res,next)=>{
     let objLogin=false;
     if(formPasswordIsEmpty && !formUserIsEmpty) objLogin={user:userName,password:login.password};
     else if(formUserIsEmpty && !formPasswordIsEmpty)objLogin={password:password,user:login.user};
-    else if(formUserIsEmpty && formPasswordIsEmpty)objLogin={user:login.user,password:login.password};
+    else if(!formUserIsEmpty && !formPasswordIsEmpty)objLogin={user:userName,password:password};
     
     if(objLogin){
+        console.log("lllllllllllllllllllllllll",objLogin);
         if(person.id==1){
             funcs.allow(res,"not allowed change user or password the owner!!");
             return;

@@ -5,7 +5,7 @@ const session = require("express-session");
 const FileStore = require("session-file-store")(session);
 const bodyParser = require("body-parser");
 
-// إعدادات middleware
+//  middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -13,7 +13,6 @@ app.use(express.static(path.join(__dirname, "views")));
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-// إعداد الجلسة
 app.use(
   session({
     store: new FileStore(),
@@ -24,7 +23,7 @@ app.use(
   })
 );
 
-// استيراد Routes
+//  Routes
 const loginRouter = require("./routes/sidBar/login");
 const logoutRouter = require("./routes/sidBar/logout");
 const settingRouter = require("./routes/sidBar/setting");
@@ -45,13 +44,20 @@ app.use(adminStudentRouter);
 app.use(teacherRouter);
 app.use(studentRouter);
 
-// العلاقات بين الجداول
+
+
+
 const Table = require("./util/include");
 const sequelize = require("./util/database");
 const funcs = require("./util/funcs");
 
+// another like
+app.use('/',(req,res,next)=>{
+  funcs.allow(res,'this link is dosen`t exist !!');
+  return ;
+})
 // ***********************
-// الشخصيات والعلاقات
+// person
 Table.Person.hasOne(Table.Admin, { foreignKey: "personId", onDelete: "CASCADE" });
 Table.Admin.belongsTo(Table.Person, { foreignKey: "personId" });
 
@@ -67,7 +73,7 @@ Table.Login.belongsTo(Table.Person, { foreignKey: "personId" });
 Table.Person.hasOne(Table.Permission, { foreignKey: "personId", onDelete: "CASCADE" });
 Table.Permission.belongsTo(Table.Person, { foreignKey: "personId" });
 
-// علاقات Teacher-Subject
+//  Teacher-Subject
 Table.Teacher.belongsToMany(Table.Subject, {
   through: Table.Teacher_subject,
   foreignKey: "teacherId",
@@ -79,7 +85,7 @@ Table.Subject.belongsToMany(Table.Teacher, {
   otherKey: "teacherId",
 });
 
-// علاقات Student-Subject
+//  Student-Subject
 Table.Student.belongsToMany(Table.Subject, {
   through: Table.Registartion,
   foreignKey: "studentId",
@@ -91,7 +97,7 @@ Table.Subject.belongsToMany(Table.Student, {
   otherKey: "studentId",
 });
 
-// علاقات Registration
+//  Registration
 Table.Registartion.belongsTo(Table.Student, { foreignKey: "studentId", onDelete: "CASCADE" });
 Table.Student.hasMany(Table.Registartion, { foreignKey: "studentId" });
 
@@ -101,11 +107,11 @@ Table.Subject.hasMany(Table.Registartion, { foreignKey: "subjectCode" });
 Table.Registartion.belongsTo(Table.Teacher, { foreignKey: "teacherId", onDelete: "CASCADE" });
 Table.Teacher.hasMany(Table.Registartion, { foreignKey: "teacherId" });
 
-// علاقات Grade
+//  Grade
 Table.Grade.hasOne(Table.Registartion, { foreignKey: "gradeId", onDelete: "CASCADE" });
 Table.Registartion.belongsTo(Table.Grade, { foreignKey: "gradeId" });
 
-// علاقات Attendance
+//  Attendance
 Table.Attendance.hasOne(Table.Registartion, { foreignKey: "attendanceId", onDelete: "CASCADE" });
 Table.Registartion.belongsTo(Table.Attendance, { foreignKey: "attendanceId" });
 
@@ -113,7 +119,7 @@ Table.Attendance.hasMany(Table.AttendanceDate, { foreignKey: "attendanceId", onD
 Table.AttendanceDate.belongsTo(Table.Attendance, { foreignKey: "attendanceId" });
 
 // *************************
-// دالة لإنشاء بيانات المشرف إذا لم تكن موجودة
+
 const createAdminIfNotExists = async () => {
   const FoundTheOwner = await Table.Login.findByPk("loai");
   if (!FoundTheOwner) {
@@ -129,25 +135,23 @@ const createAdminIfNotExists = async () => {
     await person.createAdmin();
     await person.createPermission(funcs.getPermission(true));
     await person.save();
-    console.log("✅ Admin account created");
+    console.log("Admin account created");
   }
 };
 
-// *************************
-// الاتصال بالقاعدة وتشغيل السيرفر
-sequelize
-  .authenticate()
-  .then(() => console.log("✅ Database connected successfully!"))
-  .catch(err => console.error("❌ Database connection failed:", err));
 
 sequelize
-  .sync({ alter: true }) // يحافظ على الجداول بدون حذف
+  .authenticate()
+  .then(() => console.log(" Database connected successfully!"))
+  .catch(err => console.error(" Database connection failed:", err));
+
+sequelize
+  .sync()// { alter: true }
   .then(async () => {
     await createAdminIfNotExists();
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
-  .catch(err => console.error("❌ Error during sync:", err));
 
   /*
 git status

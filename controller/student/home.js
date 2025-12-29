@@ -28,6 +28,8 @@ exports.getSubjects=async(req,res,next)=>{
           const teacher=await reg.getTeacher();
           const studentsCount=await teacher.countRegistartions({where:{subjectCode:sub.code}});
           sub['studentsCount']=studentsCount;
+          let dates=(`${reg.date}`).split(' ');
+          sub['date']=`${dates[0]} ${dates[1]} ${dates[2]} ${dates[3]} `;
     }
     res.render('ejs/student/home',{title:'My Subjects',subjects:subjects});
 }

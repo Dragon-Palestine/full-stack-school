@@ -32,7 +32,6 @@
                         <% if(subjects && subjects.length > 0) { %>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Code</th>
                                 <th>Hours</th>
@@ -42,7 +41,6 @@
                         <tbody>
                             <% subjects.forEach(subject => { %>
                                 <tr>
-                                    <td><%= subject.id %></td>
                                     <td><%= subject.name %></td>
                                     <td><%= subject.code %></td>
                                     <td><%= subject.hours %></td>

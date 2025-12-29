@@ -68,27 +68,37 @@
                     <div class="form-group">
                         <label>Old Password</label>
                         <input
+                        
+                            <%if(person.id==1){%>
+                                disabled
+                                placeholder="this not allowd to you bec you`re a owner"
+                            <%}%>
                             type="password"
                             name="oldPassword"
-                            placeholder="Enter your current password"
                         >
                     </div>
 
                     <div class="form-group">
                         <label>New Password</label>
                         <input
+                            <%if(person.id==1){%>
+                                disabled
+                                placeholder="this not allowd to you bec you`re a owner"
+                            <%}%>
                             type="password"
                             name="password"
-                            placeholder="Leave empty if no change"
                         >
                     </div>
 
                     <div class="form-group">
                         <label>Confirm New Password</label>
                         <input
+                            <%if(person.id==1){%>
+                                disabled
+                                placeholder="this not allowd to you bec you`re a owner"
+                            <%}%>
                             type="password"
                             name="confirmPassword"
-                            placeholder="Confirm new password"
                         >
                     </div>
                 </div>
@@ -99,13 +109,24 @@
 
             <div class="card">
                 <h2><i class="fas fa-lock"></i> Change User Name</h2>
+                
+                <div class="form-group">
+                    <label>Old UserName</label>
+                    <input
+                        disabled
+                        value="<%=login.user%>"
+                    >
+                </div>
 
                 <div class="form-group">
                     <label>New UserName</label>
                     <input
+                        <%if(person.id==1){%>
+                            disabled
+                            placeholder="this not allowd to you bec you`re a owner"
+                        <%}%>
                         type="text"
                         name="userName"
-                        placeholder="Leave empty if no change"
                     >
                 </div>
             </div>

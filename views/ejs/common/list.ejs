@@ -46,10 +46,16 @@
                                         <td><%= person.name %></td>
                                         <td><%= person.email %></td>
                                         <td><%= person.role %></td>
+                                        <%if(person.id!=1){%>
                                         <td>
                                             <a href="/admin/manage_<%=For%>/edit/<%= person.id %>" class="btn sm">Edit</a>
                                             <a href="/admin/manage_<%=For%>/delete/<%= person.id %>" class="btn sm danger">Delete</a>
                                         </td>
+                                        <%}else{%>
+                                            <td>
+                                                <p>no action bec u r the owner</p>
+                                            </td>
+                                        <%}%>
                                     </tr>
                                 <% }) %>
                             <% } else { %>

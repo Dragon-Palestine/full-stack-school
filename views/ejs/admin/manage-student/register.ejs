@@ -1,99 +1,187 @@
-<%- include('../../include/head.ejs') %>
-<body>
-<div class="dashboard">
+<%- include('../../include/head.ejs') %> 
 
-    <!-- Sidebar -->
-    <%- include('../../include/admin_side.ejs') %>
+<style>
+/* ===== Subject Panel ===== */
+.subject-panel {
+    padding: 24px;
+}
 
-    <!-- Main Content -->
-    <main class="main">
+.subject-table-box {
+    background: #020617;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    border: 1px solid #1e293b;
+}
 
-        <!-- Navbar -->
-        <%- include('../../include/home_nav.ejs') %>
+.subject-table-box h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e5e7eb;
+}
 
-        <!-- subject Panel -->
-        <section class="subject-panel">
+/* ===== Teacher Name ===== */
+.subject-table-box p {
+    margin: 18px 0 10px;
+    font-weight: 600;
+    color: #cbd5f5;
+}
 
-            <div class="subject-table-box">
-                <h2><i class="fas fa-table"></i> Subject List</h2>
+/* ===== Checkbox Row ===== */
+.check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    transition: all .2s ease;
+}
 
-                <% if (!valible.length) { %>
-                    <p>we did not found any subject !!</p>
-                    <a href="/admin/manage_subject/add">Add</a>
-                    <a href="/admin/manage_student">back</a>
-                <% } else { %>
+.check:hover {
+    background: #020617;
+    border-color: #3b82f6;
+}
 
-                <form id="registerForm"
-                      action="/admin/manage_student/select_student/<%= studentId %>/register"
-                      method="post">
+.check label {
+    font-size: .95rem;
+    color: #e5e7eb;
+    cursor: pointer;
+}
 
-                    <% for (let val of valible) { %>
-                        <%
-                            const teacher = val[0];
-                            const teacherName = val[1];
-                            const subjects = val[2];
-                        %>
+/* ===== Checkbox Style ===== */
+.sub-check {
+    width: 18px;
+    height: 18px;
+    accent-color: #22c55e; /* أخضر نظيف */
+    cursor: pointer;
+}
 
-                        <p><%= teacherName %></p>
+/* ===== Buttons ===== */
+.subject-table-box .btn {
+    margin-top: 20px;
+    padding: 10px 22px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #fff;
+    font-size: .95rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+}
 
-                        <% for (let subject of subjects) { %>
-                            <%
-                                const data = [teacher.id, subject.code];
-                                const wasChecked = (did[subject.name] == teacher.id);
-                            %>
+.subject-table-box .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(59,130,246,.35);
+}
 
-                            <div class="check">
-                                <label for="<%= subject.name %>"><%= subject.name %></label>
+/* ===== Empty State ===== */
+.subject-table-box a {
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: 10px;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
 
-                                <input type="checkbox"
-                                       class="sub-check"
-                                       id="<%= subject.name %>"
-                                       value="<%= data %>"
-                                       data-old="<%= wasChecked ? 1 : 0 %>"
-                                       <%= wasChecked ? 'checked' : '' %>>
-                            </div>
-                        <% } %>
+.subject-table-box a:hover {
+    text-decoration: underline;
+}
+</style>
 
-                    <% } %>
-
-                    <button type="submit" class="btn">Submit</button>
-                </form>
-
-                <% } %>
-
-            </div>
-
-        </section>
-
-    </main>
-</div>
-
-<!-- ✅ JavaScript -->
-<script>
-document.getElementById('registerForm').addEventListener('submit', function () {
-
-    document.querySelectorAll('.sub-check').forEach(ch => {
-
-        // 🟥 كان مسجّل وانشال
-        if (ch.dataset.old === "1" && !ch.checked) {
-
-            let hidden = document.createElement('input');
-            hidden.type = 'hidden';
-            hidden.name = 'nselected';
-            hidden.value = ch.value;
-
-            this.appendChild(hidden);
-        }
-
-        // 🟩 ضل مسجّل
-        if (ch.checked) {
-            ch.name = 'selected';
-        }
-
-    });
-
-});
-</script>
-
-</body>
+<body> 
+<div class="dashboard"> 
+ 
+    <!-- Sidebar --> 
+    <%- include('../../include/admin_side.ejs') %> 
+ 
+    <!-- Main Content --> 
+    <main class="main"> 
+ 
+        <!-- Navbar --> 
+        <%- include('../../include/home_nav.ejs') %> 
+ 
+        <!-- subject Panel --> 
+        <section class="subject-panel"> 
+ 
+            <div class="subject-table-box"> 
+                <h2><i class="fas fa-table"></i> Subject List</h2> 
+ 
+                <% if (!valible.length) { %> 
+                    <p>we did not found any subject !!</p> 
+                    <a href="/admin/manage_subject/add">Add</a> 
+                    <a href="/admin/manage_student">back</a> 
+                <% } else { %> 
+ 
+                <form id="registerForm" 
+                      action="/admin/manage_student/select_student/<%= studentId %>/register" 
+                      method="post"> 
+ 
+                    <% for (let val of valible) { %> 
+                        <% 
+                            const teacher = val[0]; 
+                            const teacherName = val[1]; 
+                            const subjects = val[2]; 
+                        %> 
+                        <%if(subjects.length){%>
+                        <p><%= teacherName %></p> 
+                        <%}%>
+                        <% for (let subject of subjects) { %> 
+                            <% 
+                                const data = [teacher.id, subject.code]; 
+                                const wasChecked = (did[subject.name] == teacher.id); 
+                            %> 
+                            
+                            <div class="check"> 
+                                <label for="<%= subject.name %>"><%= subject.name %></label> 
+ 
+                                <input type="checkbox" 
+                                       class="sub-check" 
+                                       id="<%= subject.name %>" 
+                                       value="<%= data %>" 
+                                       data-old="<%= wasChecked ? 1 : 0 %>" 
+                                       <%= wasChecked ? 'checked' : '' %>> 
+                            </div> 
+                        <% } %> 
+ 
+                    <% } %> 
+ 
+                    <button type="submit" class="btn">Submit</button> 
+                </form> 
+ 
+                <% } %> 
+ 
+            </div> 
+ 
+        </section> 
+ 
+    </main> 
+</div> 
+ 
+<!-- JS 그대로 -->
+<script> 
+document.getElementById('registerForm').addEventListener('submit', function () { 
+    document.querySelectorAll('.sub-check').forEach(ch => { 
+        if (ch.dataset.old === "1" && !ch.checked) { 
+            let hidden = document.createElement('input'); 
+            hidden.type = 'hidden'; 
+            hidden.name = 'nselected'; 
+            hidden.value = ch.value; 
+            this.appendChild(hidden); 
+        } 
+        if (ch.checked) { 
+            ch.name = 'selected'; 
+        } 
+    }); 
+}); 
+</script> 
+ 
+</body> 
 </html>

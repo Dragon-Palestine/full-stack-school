@@ -1364,7 +1364,6 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 
 
 
-/* زر السايدبار النشط */
 .sidebar .menu-item.active {
   background: rgba(34, 211, 238, 0.217); /* لون الخلفية عند النشط */
   transform: translateX(4px);           /* حركة بسيطة */
@@ -1372,6 +1371,41 @@ input[type="month"]::-webkit-calendar-picker-indicator {
   color: #22d3ee;                       /* لون النص */
   font-weight: 700;
   
+}
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #9ca3af;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #22c55e; 
+  border-color: #22c55e;
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  position: absolute;
+  color: #fff;
+  font-size: 14px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+}
+
+input[type="checkbox"]:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.loginn{
+  margin: auto;
 }
 
 

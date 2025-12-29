@@ -40,15 +40,22 @@ exports.postSettingPage=async(req,res,next)=>{
     await person.set({name:name,age:age,email:email,phone:phone,gender:gender});
     await person.save();
 
-    let objLogin={user:userName,password:password};
-    if(formPasswordIsEmpty && !formUserIsEmpty) objLogin={user:userName};
-    else if(formUserIsEmpty && !formPasswordIsEmpty)objLogin={password:password};
+    let objLogin=false;
+    if(formPasswordIsEmpty && !formUserIsEmpty) objLogin={user:userName,password:login.password};
+    else if(formUserIsEmpty && !formPasswordIsEmpty)objLogin={password:password,user:login.user};
     else if(formUserIsEmpty && formPasswordIsEmpty)objLogin={user:login.user,password:login.password};
-
-    await login.set(objLogin);
-    await login.save();
-
-    console.log(formPasswordIsEmpty,formUserIsEmpty,objLogin,login);
-
+    
+    if(objLogin){
+        if(person.id==1){
+            funcs.allow(res,"not allowed change user or password the owner!!");
+            return;
+        }
+        await login.destroy();
+        await person.createLogin(objLogin);
+        await person.save();
+        req.session.user = objLogin.user; 
+        req.session.password = objLogin.password;
+    }
+    
     res.redirect(`/${req.session.role}`);
 }

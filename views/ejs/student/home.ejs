@@ -27,6 +27,20 @@
                 <div class="subject-body">
                   <p><i class="fas fa-users"></i> Students: <strong><%= subject.studentsCount %></strong></p>
                 </div>
+                <div class="subject-body">
+  <p>
+    <i class="fas fa-clock"></i>
+    Hours: <strong><%= subject.hours %></strong>
+  </p>
+</div>
+
+<div class="subject-body">
+  <p>
+    <i class="fas fa-calendar-alt"></i>
+    Register Date: <strong><%= subject.date %></strong>
+  </p>
+</div>
+
                 <div class="subject-actions">
                   <button type="submit" name="action" value="grade" class="btn small neon">
                     <i class="fas fa-star"></i> Grade

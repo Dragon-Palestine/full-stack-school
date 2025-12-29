@@ -1,86 +1,189 @@
-<%- include('../../include/head.ejs') %>
-<body>
-<div class="dashboard">
+<%- include('../../include/head.ejs') %> 
 
-  <!-- Sidebar -->
-  <%- include('../../include/admin_side.ejs') %>
+<style>
+/* ===== Subject Assign Panel ===== */
+.subject-panel {
+  padding: 24px;
+}
 
-  <!-- Main Content -->
-  <main class="main">
+.subject-table-box {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 15px 35px rgba(0,0,0,.45);
+}
 
-    <!-- Navbar -->
-    <%- include('../../include/home_nav.ejs') %>
+.subject-table-box h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  color: #e5e7eb;
+  margin-bottom: 22px;
+}
 
-    <!-- Subject Assignment Panel -->
-    <section class="subject-panel">
+/* ===== Empty State ===== */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+}
 
-      <div class="subject-table-box">
-        <h2><i class="fas fa-book"></i> Assign Subjects to Teacher</h2>
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  color: #475569;
+}
 
-        <% if (!subjects.length) { %>
-          <div class="empty-state">
-            <i class="fas fa-folder-open"></i>
-            <p>No subjects found!</p>
-            <div class="btn-container">
-              <a href="/admin/manage_subject/add" class="btn">Add Subject</a>
-              <a href="/admin/manage_teacher" class="btn outline">Back</a>
-            </div>
-          </div>
-        <% } else { %>
+.empty-state p {
+  margin-bottom: 16px;
+}
 
-          <form id="assignForm"
-                action="/admin/manage_teacher/select_teacher/<%= teacherId %>/assign"
-                method="post" class="neon-form">
+/* ===== Checkbox Row ===== */
+.check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: #020617;
+  border: 1px solid #1e293b;
+  transition: all .2s ease;
+}
 
-            <% for (let subject of subjects) { %>
-              <% const wasChecked = !!did[subject.name]; %>
-              <div class="check">
-                <input type="checkbox"
-                       class="sub-check"
-                       id="<%= subject.name %>"
-                       value="<%= subject.code %>"
-                       data-old="<%= wasChecked ? 1 : 0 %>"
-                       <%= wasChecked ? 'checked' : '' %>>
-                <label for="<%= subject.name %>"><%= subject.name %></label>
-              </div>
-            <% } %>
+.check:hover {
+  border-color: #3b82f6;
+  background: rgba(59,130,246,.05);
+}
 
-            <div class="btn-container">
-              <button type="submit" class="btn">Submit</button>
-            </div>
-          </form>
+.check label {
+  color: #e5e7eb;
+  font-size: .95rem;
+  cursor: pointer;
+}
 
-        <% } %>
+/* ===== Checkbox ===== */
+.sub-check {
+  width: 18px;
+  height: 18px;
+  accent-color: #22c55e;
+  cursor: pointer;
+}
 
-      </div>
+/* ===== Buttons ===== */
+.btn-container {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-    </section>
+.btn {
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: .95rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  transition: all .2s ease;
+}
 
-  </main>
-</div>
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(59,130,246,.4);
+}
 
-<!-- JavaScript to handle checked/unchecked logic -->
-<script>
-document.getElementById('assignForm')?.addEventListener('submit', function () {
-  document.querySelectorAll('.sub-check').forEach(ch => {
+.btn.outline {
+  background: transparent;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+}
 
-    // Unchecked but was previously checked
-    if (ch.dataset.old === "1" && !ch.checked) {
-      const hidden = document.createElement('input');
-      hidden.type = 'hidden';
-      hidden.name = 'nselected';
-      hidden.value = ch.value;
-      this.appendChild(hidden);
-    }
+.btn.outline:hover {
+  background: rgba(59,130,246,.1);
+}
+</style>
 
-    // Checked (new or old)
-    if (ch.checked) {
-      ch.name = 'selected';
-    }
-
-  });
-});
-</script>
-
-</body>
+<body> 
+<div class="dashboard"> 
+ 
+  <!-- Sidebar --> 
+  <%- include('../../include/admin_side.ejs') %> 
+ 
+  <!-- Main Content --> 
+  <main class="main"> 
+ 
+    <!-- Navbar --> 
+    <%- include('../../include/home_nav.ejs') %> 
+ 
+    <!-- Subject Assignment Panel --> 
+    <section class="subject-panel"> 
+ 
+      <div class="subject-table-box"> 
+        <h2><i class="fas fa-book"></i> Assign Subjects to Teacher</h2> 
+ 
+        <% if (!subjects.length) { %> 
+          <div class="empty-state"> 
+            <i class="fas fa-folder-open"></i> 
+            <p>No subjects found!</p> 
+            <div class="btn-container"> 
+              <a href="/admin/manage_subject/add" class="btn">Add Subject</a> 
+              <a href="/admin/manage_teacher" class="btn outline">Back</a> 
+            </div> 
+          </div> 
+        <% } else { %> 
+ 
+          <form id="assignForm" 
+                action="/admin/manage_teacher/select_teacher/<%= teacherId %>/assign" 
+                method="post" class="neon-form"> 
+ 
+            <% for (let subject of subjects) { %> 
+              <% const wasChecked = !!did[subject.name]; %> 
+              <div class="check"> 
+                <input type="checkbox" 
+                       class="sub-check" 
+                       id="<%= subject.name %>" 
+                       value="<%= subject.code %>" 
+                       data-old="<%= wasChecked ? 1 : 0 %>" 
+                       <%= wasChecked ? 'checked' : '' %>> 
+                <label for="<%= subject.name %>"><%= subject.name %></label> 
+              </div> 
+            <% } %> 
+ 
+            <div class="btn-container"> 
+              <button type="submit" class="btn">Submit</button> 
+            </div> 
+          </form> 
+ 
+        <% } %> 
+ 
+      </div> 
+ 
+    </section> 
+ 
+  </main> 
+</div> 
+ 
+<script> 
+document.getElementById('assignForm')?.addEventListener('submit', function () { 
+  document.querySelectorAll('.sub-check').forEach(ch => { 
+    if (ch.dataset.old === "1" && !ch.checked) { 
+      const hidden = document.createElement('input'); 
+      hidden.type = 'hidden'; 
+      hidden.name = 'nselected'; 
+      hidden.value = ch.value; 
+      this.appendChild(hidden); 
+    } 
+    if (ch.checked) { 
+      ch.name = 'selected'; 
+    } 
+  }); 
+}); 
+</script> 
+ 
+</body> 
 </html>

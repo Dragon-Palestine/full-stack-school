@@ -28,11 +28,13 @@
                     <div class="user-info"> 
                         <strong><%= person.name %></strong> 
                         <span><%= person.email %></span> 
-                    </div> 
-
-                    <a href="/admin/manage_permission/<%= person.id %>" class="btn small danger"> 
-                        Manage 
-                    </a> 
+                    </div>    
+                    <%if(person.id!=1){%>
+                        <a href="/admin/manage_permission/<%= person.id %>" class="btn small danger"> 
+                            Manage 
+                        </a>
+                    <%}%>
+                    
                 </div> 
             <% }) %> 
         </div> 

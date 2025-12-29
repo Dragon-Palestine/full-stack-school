@@ -10,15 +10,13 @@ exports.getLoginPage = (req, res, next) => {
 exports.postLoginPage = async (req, res, next) => { 
   const user = req.body.user; 
   const pass = req.body.password; 
-
+  
   const login = await Table.Login.findByPk(user); 
   const permission = login && (await Table.Permission.findOne({ where: { personId: login.personId }, login: login })); 
   const person = login && (await Table.Person.findByPk(login.personId)); 
-
   if (!login || login.password !== pass) {
     let message = '';
-    if (!login && login.password !== pass) message = 'this user and password are not correct';
-    else if (!login) message = 'this user is not correct';
+    if (!login) message = 'this user is not correct';
     else message = 'this password is not correct';
     funcs.allow(res, message); 
     return;

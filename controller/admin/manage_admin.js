@@ -174,6 +174,10 @@ exports.sellectPersonTogetManagePermissionPage = async (req, res, next) => {
 
 exports.getManagePermissionPage = async (req, res, next) => {
   const personId = req.params.personId;
+  if(personId==1){
+    funcs.allow(res,'not allowed change the owner permissions !! ');
+    return;
+  }
   const person = await Table.Person.findByPk(personId);
   const permission = await person.getPermission();
   res.render("ejs/admin/manage-admin/edit-permission", {
@@ -225,7 +229,11 @@ exports.postManagePermissionPage = async (req, res, next) => {
     funcs.allow(res,`you ${notAllow} a permission you not has it !!`);
     return;
   }
-
+  
   await oldPermisson.save();
+  if(personId==req.session.personId){
+    res.redirect('/logout');
+    return;
+  }
   res.redirect('/admin/manage_admin/manage_permission');
 };

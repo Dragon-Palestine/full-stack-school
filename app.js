@@ -217,7 +217,7 @@ sequelize
   .catch(err => console.error(" Database connection failed:", err));
 
 sequelize
-  .sync({force:true})// { alter: true }
+  .sync()// { alter: true }
   .then(async () => {
     await createAdminIfNotExists();
     const PORT = process.env.PORT || 3000;

@@ -53,7 +53,7 @@ exports.postAddAdminPage = async (req, res, next) => {
   const repass = req.body.confirmPassword;
   let per = req.body.permissions;
   const ownerPer = req.session.permission;
-  if (typeof per != typeof []) per = [per];
+  if (per && typeof per != typeof []) per = [per];
 
   const userExist = await Table.Login.findByPk(req.body.username);
 
@@ -66,6 +66,7 @@ exports.postAddAdminPage = async (req, res, next) => {
     return;
   }
   let notAllow = false;
+  if(per)
   for (p of per) {
     if (!ownerPer[p]) {
       notAllow = true;
@@ -78,14 +79,17 @@ exports.postAddAdminPage = async (req, res, next) => {
     );
     return;
   }
-
   const person = await funcs.addPerson(req, "admin");
+  if(per){
+    const permission=await funcs.addPermission(per);
+    await person.setPermission(permission);
+  }else{
+    await  person.createPermission(funcs.getPermission(false));
+  }
   const login = await funcs.addLogin(req);
-  const permission = await funcs.addPermission(per);
 
   await person.createAdmin();
   await person.setLogin(login);
-  await person.setPermission(permission);
 
   res.redirect("/admin/manage_admin/list");
 };

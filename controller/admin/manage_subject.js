@@ -52,7 +52,7 @@ exports.postEditSubjectPage=async(req,res,next)=>{
     const preCode=req.body.preCode;
     const preName=req.body.preName;
 
-    // if thair something exist
+    // if their something exist
     let isFound;
     isFound=code!=preCode && await Table.Subject.findByPk(code);
     if(isFound){

@@ -13,16 +13,17 @@ exports.getManageTeacherPage=async(req,res,next)=>{
 }
 
 exports.getAddTeacherPage=(req,res,next)=>{
-    const permissions=[
-        'manageAdmin',
-        'manageTeacher',
-        'manageStudent',
-        'manageSubject',
-        'manageGrade',
-        'manageAttendance',
-        'assignSubjectToTeacher',
-        'assignSubjectToStudent',
-    ]
+    const permissions = [
+    "manageAdmin",
+    "manageTeacher",
+    "manageStudent",
+    "manageSubject",
+    "manageGrade",
+    "manageAttendance",
+    "assignSubjectToTeacher",
+    "assignSubjectToStudent",
+    "managePermission",
+  ];
     res.render('ejs/common/add-person',{title:'Add Admin',role:req.session.role,link:'/admin/manage_teacher/add',permissions:permissions,For:'teacher'})
 }
 
@@ -31,7 +32,7 @@ exports.postAddTeacherPage=async(req,res,next)=>{
     const repass=req.body.confirmPassword;
     let per=req.body.permissions;
     const ownerPer=req.session.permission;
-    if(typeof per != typeof [])per=[per];
+    if(per && typeof per != typeof [])per=[per];
 
     const userExist=await Table.Login.findByPk(req.body.username);
 
@@ -44,6 +45,7 @@ exports.postAddTeacherPage=async(req,res,next)=>{
         return;
     }
     let notAllow=false;
+    if(per)
     for(p of per){
         if(!ownerPer[p]){
             notAllow=true;
@@ -53,14 +55,19 @@ exports.postAddTeacherPage=async(req,res,next)=>{
         funcs.allow(res,'you set a permission was not accsess for the curent teacher');
         return ;
     }
-
     const person=await funcs.addPerson(req,'teacher');
+
+    if(per){
+        const permission=await funcs.addPermission(per);
+        await person.setPermission(permission);
+    }else{
+        await  person.createPermission(funcs.getPermission(false));
+    }
+
     const login=await funcs.addLogin(req);
-    const permission=await funcs.addPermission(per);
     // const teacher=await Table.Teacher.create();
     await person.createTeacher();
     await person.setLogin(login);
-    await person.setPermission(permission);
 
     res.redirect('/admin/manage_teacher/list');
 }

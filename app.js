@@ -23,100 +23,171 @@ app.use(
   })
 );
 
+const Table = require("./util/include");
+const sequelize = require("./util/database");
+const funcs = require("./util/funcs");
+
 //  Routes
+
 const loginRouter = require("./routes/sidBar/login");
+app.use(loginRouter);
+
 const logoutRouter = require("./routes/sidBar/logout");
+app.use(logoutRouter);
+
+
 const settingRouter = require("./routes/sidBar/setting");
+app.use(settingRouter);
+
 const adminRouter = require("./routes/admin/manage_admin");
 const adminTeacherRouter = require("./routes/admin/manage_teacher");
 const adminSubjectRouter = require("./routes/admin/manage_subject");
 const adminStudentRouter = require("./routes/admin/manage_student");
-const teacherRouter = require("./routes/teacher/home");
-const studentRouter = require("./routes/student/home");
-
-app.use(loginRouter);
-app.use(logoutRouter);
-app.use(settingRouter);
 app.use(adminRouter);
 app.use(adminTeacherRouter);
 app.use(adminSubjectRouter);
 app.use(adminStudentRouter);
+
+const teacherRouter = require("./routes/teacher/home");
 app.use(teacherRouter);
+
+const studentRouter = require("./routes/student/home");
 app.use(studentRouter);
-
-
-
-
-const Table = require("./util/include");
-const sequelize = require("./util/database");
-const funcs = require("./util/funcs");
 
 // another like
 app.use('/',(req,res,next)=>{
   funcs.allow(res,'this link is dosen`t exist !!');
   return ;
 })
-// ***********************
-// person
-Table.Person.hasOne(Table.Admin, { foreignKey: "personId", onDelete: "CASCADE" });
-Table.Admin.belongsTo(Table.Person, { foreignKey: "personId" });
 
-Table.Person.hasOne(Table.Teacher, { foreignKey: "personId", onDelete: "CASCADE" });
-Table.Teacher.belongsTo(Table.Person, { foreignKey: "personId" });
 
-Table.Person.hasOne(Table.Student, { foreignKey: "personId", onDelete: "CASCADE" });
-Table.Student.belongsTo(Table.Person, { foreignKey: "personId" });
+// relations
+//*************************************** */
 
-Table.Person.hasOne(Table.Login, { foreignKey: "personId", onDelete: "CASCADE" });
-Table.Login.belongsTo(Table.Person, { foreignKey: "personId" });
+Table.Person.hasOne(Table.Admin, {
+  foreignKey: "personId",
+  onDelete: "CASCADE",
+});
+Table.Admin.belongsTo(Table.Person, {
+  foreignKey: "personId",
+});
 
-Table.Person.hasOne(Table.Permission, { foreignKey: "personId", onDelete: "CASCADE" });
-Table.Permission.belongsTo(Table.Person, { foreignKey: "personId" });
+Table.Person.hasOne(Table.Teacher, {
+  foreignKey: "personId",
+  onDelete: "CASCADE",
+});
+Table.Teacher.belongsTo(Table.Person, {
+  foreignKey: "personId",
+});
 
-//  Teacher-Subject
+Table.Person.hasOne(Table.Student, {
+  foreignKey: "personId",
+  onDelete: "CASCADE",
+});
+Table.Student.belongsTo(Table.Person, {
+  foreignKey: "personId",
+});
+
+//*************************************** */
+
+Table.Person.hasOne(Table.Login, {
+  foreignKey: "personId",
+  onDelete: "CASCADE",
+});
+Table.Login.belongsTo(Table.Person, {
+  foreignKey: "personId",
+});
+
+Table.Person.hasOne(Table.Permission, {
+  foreignKey: "personId",
+  onDelete: "CASCADE",
+});
+Table.Permission.belongsTo(Table.Person, {
+  foreignKey: "personId",
+});
+
+//*************************************** */
+
 Table.Teacher.belongsToMany(Table.Subject, {
   through: Table.Teacher_subject,
   foreignKey: "teacherId",
   otherKey: "subjectCode",
 });
+
 Table.Subject.belongsToMany(Table.Teacher, {
   through: Table.Teacher_subject,
   foreignKey: "subjectCode",
   otherKey: "teacherId",
 });
 
-//  Student-Subject
+//*************************************** */
+
 Table.Student.belongsToMany(Table.Subject, {
   through: Table.Registartion,
   foreignKey: "studentId",
   otherKey: "subjectCode",
 });
+
 Table.Subject.belongsToMany(Table.Student, {
   through: Table.Registartion,
   foreignKey: "subjectCode",
   otherKey: "studentId",
 });
 
-//  Registration
-Table.Registartion.belongsTo(Table.Student, { foreignKey: "studentId", onDelete: "CASCADE" });
-Table.Student.hasMany(Table.Registartion, { foreignKey: "studentId" });
+//*************************************** */
 
-Table.Registartion.belongsTo(Table.Subject, { foreignKey: "subjectCode", onDelete: "CASCADE" });
-Table.Subject.hasMany(Table.Registartion, { foreignKey: "subjectCode" });
+Table.Registartion.belongsTo(Table.Student, {
+  foreignKey: "studentId",
+  onDelete: "CASCADE",
+});
+Table.Student.hasMany(Table.Registartion, {
+  foreignKey: "studentId",
+});
 
-Table.Registartion.belongsTo(Table.Teacher, { foreignKey: "teacherId", onDelete: "CASCADE" });
-Table.Teacher.hasMany(Table.Registartion, { foreignKey: "teacherId" });
+Table.Registartion.belongsTo(Table.Subject, {
+  foreignKey: "subjectCode",
+  onDelete: "CASCADE",
+});
+Table.Subject.hasMany(Table.Registartion, {
+  foreignKey: "subjectCode",
+});
 
-//  Grade
-Table.Grade.hasOne(Table.Registartion, { foreignKey: "gradeId", onDelete: "CASCADE" });
-Table.Registartion.belongsTo(Table.Grade, { foreignKey: "gradeId" });
+Table.Registartion.belongsTo(Table.Teacher, {
+  foreignKey: "teacherId",
+  onDelete: "CASCADE",
+});
+Table.Teacher.hasMany(Table.Registartion, {
+  foreignKey: "teacherId",
+});
 
-//  Attendance
-Table.Attendance.hasOne(Table.Registartion, { foreignKey: "attendanceId", onDelete: "CASCADE" });
-Table.Registartion.belongsTo(Table.Attendance, { foreignKey: "attendanceId" });
+//*************************************** */
 
-Table.Attendance.hasMany(Table.AttendanceDate, { foreignKey: "attendanceId", onDelete: "CASCADE" });
-Table.AttendanceDate.belongsTo(Table.Attendance, { foreignKey: "attendanceId" });
+Table.Grade.hasOne(Table.Registartion, {
+  foreignKey: "gradeId",
+  onDelete: "CASCADE",
+});
+Table.Registartion.belongsTo(Table.Grade, {
+  foreignKey: "gradeId",
+});
+
+//*************************************** */
+
+Table.Attendance.hasOne(Table.Registartion, {
+  foreignKey: "attendanceId",
+  onDelete: "CASCADE",
+});
+Table.Registartion.belongsTo(Table.Attendance, {
+  foreignKey: "attendanceId",
+});
+
+
+Table.Attendance.hasMany(Table.AttendanceDate, {
+  foreignKey: "attendanceId",
+  onDelete: "CASCADE",
+});
+Table.AttendanceDate.belongsTo(Table.Attendance, {
+  foreignKey: "attendanceId",
+});
 
 // *************************
 
@@ -146,7 +217,7 @@ sequelize
   .catch(err => console.error(" Database connection failed:", err));
 
 sequelize
-  .sync()// { alter: true }
+  .sync({force:true})// { alter: true }
   .then(async () => {
     await createAdminIfNotExists();
     const PORT = process.env.PORT || 3000;

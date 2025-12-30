@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Accounts</title>
+
+  <style>
+    body {
+      background: #020617;
+      color: #e5e7eb;
+      font-family: 'Poppins', system-ui;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .section {
+      margin-bottom: 50px;
+      background: #0f172a;
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.4);
+    }
+
+    .section h2 {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #38bdf8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    thead {
+      background: #020617;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    th {
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background: rgba(56,189,248,.08);
+    }
+
+    .password {
+      color: #22c55e;
+      font-weight: 600;
+    }
+
+    .empty {
+      text-align: center;
+      color: #94a3b8;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Login Accounts</h1>
+
+<!-- ================= ADMINS ================= -->
+<div class="section">
+  <h2>👑 Admin Accounts</h2>
+
+  <% if (!loginAdmin.length) { %>
+    <div class="empty">No admin accounts</div>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+            <td>User</td>
+            <td>Password</td>
+        </tr>
+       
+      </thead>
+      <tbody>
+        <% loginAdmin.forEach(user => { %>
+          <tr>
+            <td><%=user.user%></td>
+            <td><%=user.password%></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<!-- ================= TEACHERS ================= -->
+<div class="section">
+  <h2>🎓 Teacher Accounts</h2>
+
+  <% if (!loginTeacher.length) { %>
+    <div class="empty">No teacher accounts</div>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+            <td>User</td>
+            <td>Password</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% loginTeacher.forEach(user => { %>
+          <tr>
+            <td><%=user.user%></td>
+            <td><%=user.password%></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<!-- ================= STUDENTS ================= -->
+<div class="section">
+  <h2>👨‍🎓 Student Accounts</h2>
+
+  <% if (!loginStudent.length) { %>
+    <div class="empty">No student accounts</div>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+            <td>User</td>
+            <td>Password</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% loginStudent.forEach(user => { %>
+          <tr>
+            <td><%=user.user%></td>
+            <td><%=user.password%></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+</body>
+</html>

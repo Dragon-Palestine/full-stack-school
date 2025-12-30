@@ -162,9 +162,12 @@ exports.postregisterPage=async(req,res,next)=>{
         if(!data) continue;
         const [teacherId,subjectCode]=data.split(',');
         const reg=await Table.Registartion.findOne({where:{studentId:studentId,teacherId:teacherId,subjectCode:subjectCode}});
-        reg.destroy();
-    }
+        if (reg) {
+            await reg.destroy();
+        }
 
+    }
+    
     // put mark and store the subjects are curent reg in this student
     const registartions=await Table.Registartion.findAll({where:{studentId:studentId}});
     const same={},usedSubjects={};
@@ -172,16 +175,29 @@ exports.postregisterPage=async(req,res,next)=>{
         usedSubjects[reg.subjectCode]=true;
         same[[reg.studentId,reg.teacherId,reg.subjectCode]]=true;
     }
-
+    
+    const setSubject={};
     for(let data of selected){
         if(!data) continue;
         const [teacherId,subjectCode]=data.split(',');
         if(same[[studentId,teacherId,subjectCode]]) continue;
 
+        if(!setSubject[subjectCode])setSubject[subjectCode]=1;
+        else setSubject[subjectCode]++;
+        if(setSubject[subjectCode]==2){
+            funcs.allow(res,'this you choosed a subject in more than one time in multi teacher !!');
+            return;
+        }
+
         if(usedSubjects[subjectCode]){
             funcs.allow(res,'this you choosed a subject in more than one time in multi teacher !!');
             return;
         }
+    }
+    for(let data of selected){
+        if(!data) continue;
+        const [teacherId,subjectCode]=data.split(',');
+
         const date=(new Date()).toISOString().split('T')[0];
         const registartion=await Table.Registartion.create({date:date,teacherId:teacherId,studentId:studentId,subjectCode:subjectCode});
         await registartion.createGrade();
@@ -189,17 +205,9 @@ exports.postregisterPage=async(req,res,next)=>{
         await registartion.save();
     }
 
-    // // delete a registartion was not cheked   
-    // console.log("hhhhhhhhhhhhhhhhhhhhhhhhh ",JSON.stringify(did));    
-    // for(let d of JSON.stringify(did)){
-    //     console.log("ppppx",d,"xppppp");
-    //     const [studentId,teacherId,subjectCode]=d;
-    //     const reg=await Table.Registartion.findOne({where:{studentId:studentId,teacherId:teacherId,subjectCode:subjectCode}});
-    //     reg.destroy();
-    // }
-    // delete all subject for this student
-     ///
-    // add date
+
     res.redirect('/admin/manage_student');
 }
+
+
 
